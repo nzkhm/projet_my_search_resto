@@ -1,0 +1,69 @@
+extends ../layout
+
+block content
+    // About Section
+    section#info.success(style="padding-top: 200px;")
+      .container
+        .row
+          .col-lg-12.text-center
+            h2 #{restaurant.name}
+            hr.star-light
+        .row
+          .col-lg-4.col-lg-offset-2
+            p
+              | #{restaurant.location}
+            p
+              | #{restaurant.zipCode}
+          .col-lg-4
+            p
+              | Neighborhood : 
+            p
+              | #{restaurant.neighborhood}
+          .col-lg-8.col-lg-offset-2.text-center
+            a.btn.btn-lg.btn-outline(href='#comment')
+              i.fa
+              |  Commment
+    section#meals
+      .container
+        a.btn.btn-primary(href="/meals/create/#{restaurant._id}/") Create Meal
+      .container
+        .row
+          .col-lg-12.text-center
+            h2 Meals offered by #{restaurant.name}
+            hr.star-primary
+        .row
+          each meal in meals
+            .col-sm-4.portfolio-item.text-center
+              a.portfolio-link(href='#', data-toggle='modal')
+                .caption
+                  p
+                  | #{meal.name}
+                  .caption-content
+                    i.fa.fa-cutlery
+    // Contact Section
+    section#comments
+      .container
+        .row
+          .col-lg-12.text-center
+            h2 Comments
+            hr.star-primary
+        .row
+          .col-lg-8.col-lg-offset-2
+            // To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.
+            // The form should work on most web servers, but if the form is not working you may need to configure your web server differently.
+            form#contactForm(name='sentMessage', novalidate='')
+              .row.control-group
+                .form-group.col-xs-12.floating-label-form-group.controls
+                  label Name
+                  input#name.form-control(type='text', placeholder='Name', required='', data-validation-required-message='Please enter your name.')
+                  p.help-block.text-danger
+              .row.control-group
+                .form-group.col-xs-12.floating-label-form-group.controls
+                  label Message
+                  textarea#message.form-control(rows='5', placeholder='Message', required='', data-validation-required-message='Please enter a message.')
+                  p.help-block.text-danger
+              br
+              #success
+              .row
+                .form-group.col-xs-12
+                  button.btn.btn-success.btn-lg(type='submit') Send

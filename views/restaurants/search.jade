@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+    section#search_results
+      .container
+        .row
+          .col-lg-12.text-center
+            h2 Restaurants 
+            hr.star-primary
+        .row
+            each restaurant in restaurants
+            .col-sm-4.portfolio-item.text-center
+                a.portfolio-link(href='/restaurants/view/#{restaurant._id}', data-toggle='modal')
+                .caption
+                    .caption-content
+                    i.fa.fa-search-plus.fa-3x 
+                    span #{restaurant.name}
+                img.img-responsive(src='/img/restaurants/demo.png', style='height: 150px; margin: 0 auto;' alt='')
