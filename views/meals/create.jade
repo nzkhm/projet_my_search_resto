@@ -9,7 +9,7 @@ block content
             .container
                 .row
                     .col-lg-12.text-center
-                        form(action="/meals/edit/#{meal._id}" method="POST")
+                        form(action="/meals/create" method="POST")
                             .form-group
                                 input#mealName.form-control(name="name" type="text" placeholder="Enter the name of a meal")
                             .form-group
@@ -17,15 +17,16 @@ block content
                             .form-group
                                 input#neighborhood.form-control(name="ingredients" type="text" placeholder="Enter a neighborhood")
                             .form-group
-                                input#councilDistrict.form-control(name="fk_restaurant" type="text" value="#{restaurant.id}")
-                            .form-group
-                                label(for='vegan') Vegan
-                                input#councilDistrict.form-control(name="vegan" type="checkbox")
-                                label(for='halal') Halal
-                                input#councilDistrict.form-control(name="runtime" type="checkbox")
-                                label(for='kosher') kosher
-                                input#councilDistrict.form-control(name="kosher" type="checkbox")
+                                input#councilDistrict.form-control(name="fk_restaurant" type="text" value="")
+                            .row
+                                .form-group
+                                    label(for='vegan') Vegan
+                                    input#councilDistrict.form-control(name="vegan" type="checkbox")
+                                    label(for='halal') Halal
+                                    input#councilDistrict.form-control(name="runtime" type="checkbox")
+                                    label(for='kosher') kosher
+                                    input#councilDistrict.form-control(name="kosher" type="checkbox")
                             .form-group
                                 .btn-group
-                                    button.btn.btn-primary(type="submit") Create
+                                    button.btn.btn-primary(type="submit") Create meal
                                     button.btn.btn-danger Cancel

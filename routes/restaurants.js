@@ -79,9 +79,13 @@ router.get('/view/:id', (req, res) => {
 
 router.get('/edit/:id', (req, res) => {
     //aff resto & edit
-    mongoose.model('Restaurant').findById(req.params.id, (err, item) => {
-        if (err) return res.send(err);
-        res.render('restaurants/edit', { restaurant: item });
+    mongoose.model('Restaurant').findById(req.params.id, (err, restaurant) => {
+
+        mongoose.model('Meal').find(req.params.fk_restaurant, (err, meal) => {
+            if (err) return res.send(err);
+            res.render('restaurants/edit', { restaurant, meal});
+        });
+
     });
 });
 

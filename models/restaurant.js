@@ -11,6 +11,11 @@ var RestaurantSchema = new Schema({
             keyword: { type: 'text', analyzer: 'keyword_analyzer', index: 'analyzed' }
         }
     },
+    zipCode : {type: Number},
+    neighborhood : {type: String},
+    councilDistrict : {type: String},
+    location : {type: String},
+
 });
 
 RestaurantSchema.plugin(mongoosastic);
