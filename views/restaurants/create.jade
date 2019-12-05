@@ -1,22 +1,24 @@
 extends ../layout
 
 block content
+    header
+        link(href='https://www.w3schools.com/w3css/4/w3.css' rel='stylesheet')
+        link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet')
+
     section
         .container
             .row
+            h2 Create restaurant
+            .row
                 .col-lg-12.text-center
-                    form(action="/restaurants/edit/#{restaurant._id}" method="POST")
+                    form(action="/restaurants/create" method="POST")
                         .form-group
-                            label(for='restaurantName') Name
                             input#restaurantName.form-control(name="name" type="text" placeholder="Enter the name of a restaurant")
                         .form-group
-                            label(for='location') Location
                             input#location.form-control(name="location" type="text" placeholder="Enter the name of the location")
                         .form-group
-                            label(for='neighborhood') Neighborhood
                             input#neighborhood.form-control(name="neighborhood" type="text" placeholder="Enter a neighborhood")
                         .form-group
-                            label(for='councilDistrict') Council District
                             input#councilDistrict.form-control(name="councilDistrict" type="text" placeholder="What is the council district")
                         .form-group
                             .btn-group

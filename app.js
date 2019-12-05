@@ -11,6 +11,8 @@ const mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var restaurantsRoute = require('./routes/restaurants');
+var mealsRoute = require('./routes/meals');
 
 /**
  * appel des model pour le mapping
@@ -18,9 +20,6 @@ var usersRouter = require('./routes/users');
 require('./models/restaurant'); 
 require('./models/meals');
 
-const index = require('./routes/index');
-const restaurants = require('./routes/restaurants');
-const meals = require('./routes/meals');
 
 var app = express();
 /**
@@ -44,8 +43,8 @@ app.use(express.static(path.join(__dirname, 'public')));
  */
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/restaurants', restaurants);
-app.use('/meals', meals);
+app.use('/restaurants', restaurantsRoute);
+app.use('/meals', mealsRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -14,9 +14,19 @@ router.get('/create/:restaurantId', (req, res) => {
 });
 
 router.post('/create/:restaurantId', (req, res) => {
-    mongoose.model('Restaurant').findById(req.params.id, (err, restaurant) => {
-        if (err) return res.send(err);
-        res.render('restaurants/edit', { restaurant: item });
+
+    const meal = req.body;
+    
+    meal.allergies = meal.allergies.split(',');
+    meal.ingredients = meal.ingredients.split(',');
+    
+    meal.vegan = meal.vegan === 'on';
+    meal.halal = meal.halal === 'on';
+    meal.kosher = meal.vegan=== 'on';
+
+    mongoose.model('Restaurant').create(meal, (err, item) => {
+      if (!err) return res.redirect('/');
+      res.send(err);
     });
 });
 

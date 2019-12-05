@@ -1,18 +1,63 @@
 extends ../layout
 
 block content
-  section#search_results
+  header
+    link(href='https://www.w3schools.com/w3css/4/w3.css' rel='stylesheet')
+    link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet')
+    style(type='text/css').
+      * {
+        box-sizing: border-box;
+      }
+
+      .column {
+        float: left;
+        width: 33.33%;
+        padding: 5px;
+      }
+
+      /* Clearfix (clear floats) */
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+  .container
+    .row
+      .col-lg-12
+        img.img-responsive(src='images/profile.png' alt='')
+        .intro-text
+          span.name NoYelp
+          hr.star-light
+          span.skills What are you going to eat for lunch ?
+  section
+    .container
+      .row
+        .col-lg-12
+          form(action="/restaurants/search" method="POST")
+            h2 Search Popular restaurants
+            input(type="text", name="name" placeholder="your search")
+            button.btn.btn-success.btn-lg(type='submit') Rechercher
+            hr.star-primary
+      .row
+        each restaurant in restaurants
+          .column
+            a.portfolio-link(href='/restaurants/view/#{restaurant._id}' data-toggle='modal')
+              .caption
+                .caption-content
+                  i.fa.fa-search-plus.fa-3x 
+                  span #{restaurant.name}
+              img.img-responsive(src='/img/restaurants/demo.png' style='height: 150px; margin: 0 auto;' alt='')
+  // About Section
+  section#about.success
     .container
       .row
         .col-lg-12.text-center
-          h2 Restaurants 
-          hr.star-primary
+          h2 About
+          hr.star-light
       .row
-        each restaurant in restaurants
-        .col-sm-4.portfolio-item.text-center
-          a.portfolio-link(href='/restaurants/view/#{restaurant._id}' data-toggle='modal')
-          .caption
-            .caption-content
-            i.fa.fa-search-plus.fa-3x 
-            span #{restaurant.name}
-          img.img-responsive(src='/img/restaurants/demo.png' style='height: 150px; margin: 0 auto;' alt='')
+        .col-lg-4.col-lg-offset-2
+          p
+            | NoYelp is a great tool for when you're hungry. What would you want to eat today?
+        .col-lg-4
+          p
+            | Something should be here

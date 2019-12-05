@@ -6,54 +6,51 @@ router.get('/', (req, res) => {
     res.redirect('/');
 });
 
+router.get('/search', (req, res) => {
+    mongoose.model('Restaurant').find({}, (err, items) => res.render('restaurants/search', { restaurants: items }));
+});
+
 //res.render('restaurants/search', { items: search_results });
-router.get('/search', (req, res, next) => {
-    mongoose.model('Restaurant').search({
-        // dis_max => Permet de faire une union de n requêtes tout en conservant l'element qui à le scole le plus elevé
+router.post('/search', (req, res) => {
+
+    console.log(req);
+
+    mongoose.model('Restaurant').find({
+
         dis_max: {
             queries: [
                 {
-                    // permet de tweaker un score en utilisant un script
                     function_score: {
                         query: {
-                            // va matcher les termes selon le découpage (whitespace/symbols etc.) défini 
                             match: {
                                 'name.ngram': {
-                                    query: req.query.name,
+                                    query: req.params.name,
                                     // permet les fautes de frappes
                                     fuzziness: 'AUTO'
                                 }
                             }
                         },
                         script_score: {
-                            script: '_score * 0.7'
+                            script: '_score * 0.3'
                         }
                     }
                 },
                 {
                     match: {
                         'name.keyword': {
-                            'query': req.query.name,
+                            'query': req.params.name,
                             'operator': 'or',
-                            'boost': 5.0,
+                            'boost': 3.0,
                         }
                     }
                 }
             ]
         }
+
     }, (err, items) => {
-        if (!err && items) {
-            // Vu que les resultats sont fournis dans une forme un peu particulière un element qui contient un _id, _source et _score
-            // on l'applati
-            const restaurants = items.hits.hits.map(item => {
-                const restaurant = item._source;
-                restaurant._id = item._id;
-                restaurant._score = item._score;
-                return restaurant;
-            })
-            res.render('restaurants/search', { restaurants })
-        }
+        res.render('restaurants/search', { restaurants: items })
     });
+
 });
 
 
@@ -82,7 +79,7 @@ router.get('/view/:id', (req, res) => {
 
 router.get('/edit/:id', (req, res) => {
     //aff resto & edit
-    mongoose.model('Restaurant').findById(req.params.id, (err, restaurant) => {
+    mongoose.model('Restaurant').findById(req.params.id, (err, item) => {
         if (err) return res.send(err);
         res.render('restaurants/edit', { restaurant: item });
     });
@@ -90,14 +87,17 @@ router.get('/edit/:id', (req, res) => {
 
 
 router.get('/delete/:id', (req, res) => {
-
     if (!err) res.redirect('/restaurants');
     else res.send(err);
 });
 
 router.post('/edit/:id', (req, res) => {
-    if (!err) res.redirect('/restaurants/view/' + req.params.id);
-    else res.send(err);
+
+    const restaurant = req.body;
+    mongoose.model('Restaurant').findByIdAndUpdate(req.params.id, restaurant, (err, restaurant) => {
+        if (!err) res.redirect('/restaurants/view/' + req.params.id);
+        else res.send(err);
+    })
 });
 
 
