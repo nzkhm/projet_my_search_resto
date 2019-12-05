@@ -4,8 +4,9 @@ const mongoose = require('mongoose');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-      //TODO
-      //res.render('index', { title: 'Express', restaurants : items});
+      mongoose.model('Restaurant').find({}, (err, items) => res.render('index', { restaurants: items }));
 });
+
+
 
 module.exports = router;

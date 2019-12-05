@@ -4,23 +4,48 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+/**
+ * appel du modul mongoose
+ */
+const mongoose = require('mongoose');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+/**
+ * appel des model pour le mapping
+ */
+require('./models/restaurant'); 
+require('./models/meals');
+
+const index = require('./routes/index');
+const restaurants = require('./routes/restaurants');
+const meals = require('./routes/meals');
+
 var app = express();
+/**
+ * appel de la connection mongodb
+ */
+mongoose.connect('mongodb://localhost:27017/NoYelp');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+/**
+ * appel des routes
+ */
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/restaurants', restaurants);
+app.use('/meals', meals);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

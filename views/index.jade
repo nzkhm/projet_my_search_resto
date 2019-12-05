@@ -2,23 +2,43 @@ extends layout
 
 block content
   header
-    .container
-      .row
-        .col-lg-12
-          img.img-responsive(src='img/profile.png' alt='')
-          .intro-text
-            span.name Welcome to noYelp
-            hr.star-light
-            span.skills What are you going to eat for lunch ?
+    link(href='https://www.w3schools.com/w3css/4/w3.css' rel='stylesheet')
+    link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet')
+    style(type='text/css').
+      * {
+        box-sizing: border-box;
+      }
+
+      .column {
+        float: left;
+        width: 33.33%;
+        padding: 5px;
+      }
+
+      /* Clearfix (clear floats) */
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+  .container
+    .row
+      .col-lg-12
+        img.img-responsive(src='images/profile.png' alt='')
+        .intro-text
+          span.name NoYelp
+          hr.star-light
+          span.skills What are you going to eat for lunch ?
   section
     .container
       .row
         .col-lg-12.text-center
           h2 Popular restaurants
+          input#searchbtn
           hr.star-primary
       .row
         each restaurant in restaurants
-          .col-sm-4.portfolio-item.text-center
+          .column
             a.portfolio-link(href='/restaurants/view/#{restaurant._id}' data-toggle='modal')
               .caption
                 .caption-content
